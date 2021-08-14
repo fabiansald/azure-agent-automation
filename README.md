@@ -2,7 +2,7 @@
 
 ## Project Info
 * Customer Account number: N/A
-* Customer name; RAX PS Azure Team
+* Customer name: RAX PS Azure Team
 * Project Name: Azure DevOps Agent creation
 * PSR:
 * Date:
