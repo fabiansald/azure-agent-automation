@@ -1,0 +1,19 @@
+---
+# tasks file for azagent
+
+- name: Create ADO folder
+  file:
+    path: "/home/{{ ansible_user }}/ADO"
+    state: directory
+
+- name: Download Azure Agent
+  get_url:
+    url: https://vstsagentpackage.azureedge.net/agent/2.190.0/vsts-agent-linux-x64-2.190.0.tar.gz
+    dest: "/home/{{ ansible_user }}/ADO"
+
+- name: Untar Azure Agent
+  unarchive:
+    src: "/home/{{ ansible_user }}/ADO/vsts-agent-linux-x64-2.190.0.tar.gz"
+    dest: "/home/{{ ansible_user }}/ADO/"
+    remote_src: yes
+

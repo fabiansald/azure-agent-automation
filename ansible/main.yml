@@ -1,0 +1,6 @@
+---
+- hosts: agent
+  user: centos
+  roles:
+  - updates
+  - azagent

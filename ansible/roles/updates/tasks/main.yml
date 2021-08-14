@@ -1,0 +1,36 @@
+---
+# tasks file for updates
+
+- name: Update MOTD
+  become: yes
+  copy:
+    src: motd
+    dest: /etc/motd
+
+- name: Update OS
+  become: yes
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Add Terraform repository
+  become: yes
+  shell: dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+- name: Add MS PowerShell Repo
+  become: yes
+  get_url:
+    url: https://packages.microsoft.com/config/rhel/8/prod.repo
+    dest: /etc/yum.repos.d/microsoft.repo
+
+- name: Install Ansible Repo on CentOS 8
+  become: yes
+  dnf:
+    name: centos-release-ansible-29
+    state: latest
+
+- name: Install Ansible, PowerShell and Terraform
+  become: yes
+  dnf:
+    name: ansible, terraform, powershell
+    state: latest
