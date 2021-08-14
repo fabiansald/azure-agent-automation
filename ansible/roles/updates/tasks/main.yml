@@ -29,8 +29,29 @@
     name: centos-release-ansible-29
     state: latest
 
-- name: Install Git, Ansible, PowerShell and Terraform
+- name: Import Azure CLI RPM key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Add MS Azure CLI Repo
+  become: yes
+  get_url:
+    url: https://gist.githubusercontent.com/fabiansald/0a266a536284a2b1e0e35af25e31fb50/raw/ff1ad7aa33a60657750c0ef4852bba76bddfc17a/azure-cli.repo
+    dest: /etc/yum.repos.d/azure-cli.repo
+
+- name: Install Git, Ansible, PowerShell, Azure-CLI and Terraform
   become: yes
   dnf:
-    name: git, ansible, terraform, powershell
+    name: git, ansible, terraform, powershell, azure-cli
     state: latest
+
+- name: Install PowerShell Azure Module
+  shell: Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+  args:
+    executable: "/usr/bin/pwsh"
+  register: result
+
+#- name: Show PowerShell Azure Module output
+#  debug:
+#    msg: "{{ result }}"
