@@ -1,10 +1,34 @@
-# Azure Base-Landing Zone
+# RAXPS Azure Linux Agent Creation
 
-## Scope
+## Project Info
+* Customer Account number: N/A
+* Customer name; RAX PS Azure Team
+* Project Name: Azure DevOps Agent creation
+* PSR:
+* Date:
 
-Basic template for Azure Landing Zones
+## Rackspace team
+* AP:
+* EM: 
+* Architect: Fabian Salamanca
+* Cloud Engineer: 
+
+## Goals
+* Automate Azure DevOps Agent creation and configuration
+
+## Success Criteria
+
+### Landing Zone
+* Create VNet
+* Create VM
+* Create NSG
+* Assign public IP
+
+### Configuration
+* Update OS
+* Install Azure CLI, Terraform, PowerShell, Git, Ansible and PowerShell Azure Module
+* Download and untar Azure DevOps Linux Agent software
 
 ## TODO
+* Agent configuration is interactive, need to automate maybe using expect
 
-* Add RDP bastion
-* Add SSH NSG and bastion
