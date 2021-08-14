@@ -29,8 +29,8 @@
     name: centos-release-ansible-29
     state: latest
 
-- name: Install Ansible, PowerShell and Terraform
+- name: Install Git, Ansible, PowerShell and Terraform
   become: yes
   dnf:
-    name: ansible, terraform, powershell
+    name: git, ansible, terraform, powershell
     state: latest
