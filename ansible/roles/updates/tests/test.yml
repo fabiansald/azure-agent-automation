@@ -1,5 +1,14 @@
 ---
-- hosts: localhost
-  remote_user: root
-  roles:
-    - updates
+#- hosts: localhost
+#  remote_user: root
+#  roles:
+#    - updates
+
+- name: Check Git version
+  command: git version
+  register: gitout
+
+- name: Test Git version
+  assert:
+    that:
+      - "'git' in gitou.stdout"

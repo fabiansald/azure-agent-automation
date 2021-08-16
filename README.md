@@ -47,7 +47,7 @@
 ### Configuration
 
 * Update OS
-* Install Azure CLI, Terraform, PowerShell, Git, Ansible and PowerShell Azure Module
+* Install Azure CLI, Terraform, PowerShell, Git, Ansible, PowerShell Azure Module, Docker, kubectl and istioctl
 * Download and untar Azure DevOps Linux Agent software
 
 ## TODO

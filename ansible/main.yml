@@ -1,6 +1,8 @@
 ---
 - hosts: agent
   user: centos
+  become: yes
   roles:
   - updates
   - azagent
+  - containers

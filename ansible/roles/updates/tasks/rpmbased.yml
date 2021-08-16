@@ -1,0 +1,36 @@
+---
+# tasks file for updates
+
+- name: Update OS
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Add Terraform repository
+  shell: dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+- name: Add MS PowerShell Repo
+  get_url:
+    url: https://packages.microsoft.com/config/rhel/8/prod.repo
+    dest: /etc/yum.repos.d/microsoft.repo
+
+- name: Install Ansible Repo on CentOS 8
+  dnf:
+    name: centos-release-ansible-29
+    state: latest
+
+- name: Import Azure CLI RPM key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Add MS Azure CLI Repo
+  get_url:
+    url: https://gist.githubusercontent.com/fabiansald/0a266a536284a2b1e0e35af25e31fb50/raw/ff1ad7aa33a60657750c0ef4852bba76bddfc17a/azure-cli.repo
+    dest: /etc/yum.repos.d/azure-cli.repo
+
+- name: Install Git Zip, Unzip, Ansible, PowerShell, Azure-CLI and Terraform
+  dnf:
+    name: git, ansible, terraform, powershell, azure-cli, zip, unzip
+    state: latest
+

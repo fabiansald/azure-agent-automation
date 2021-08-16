@@ -1,0 +1,54 @@
+---
+# tasks file for containers
+
+- name: Install Docker Python SDK
+  pip:
+    name: docker
+    state: present
+
+- include_tasks: debian-docker.yml
+  when: ansible_facts['os_family'] == "Debian"
+
+- include_tasks: rpmbased-docker.yml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install kubectl
+  get_url:
+    url: "https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl"
+    dest: "/usr/bin"
+    mode: 0755
+
+#- name: Download Helm
+#  get_url:
+#    url: https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
+#    dest: /tmp
+
+- name: Download Helm
+  unarchive:
+    src: "https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+ 
+- name: Install Helm
+  copy:
+    src: "/tmp/linux-amd64/helm"
+    dest: "/usr/bin"
+    remote_src: yes
+    mode: 0755
+
+- name: Install Istioctl
+  shell: |
+    #!/bin/bash
+    cd /tmp &&  curl -L https://istio.io/downloadIstio | sh -
+    ls -lrth /tmp/istio-*
+    cp /tmp/istio-*/bin/istioctl /usr/bin
+    rm -rf /tmp/istio-*
+  args:
+    chdir: /tmp
+  register: istioins
+
+- name: Check Istioctl
+  debug:
+    msg: "{{ istioins.stdout }}"
+
+    
