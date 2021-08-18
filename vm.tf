@@ -1,8 +1,6 @@
 # Virtual Machines
 
-## CentOS7 VM
-
-### Master 1
+## Azure Agent for ADO
 
 resource "azurerm_public_ip" "azagent1pip" {
   name                = "azagent1pip"
@@ -40,7 +38,7 @@ resource "azurerm_linux_virtual_machine" "azagent1" {
   resource_group_name = azurerm_resource_group.azagent1.name
   location            = azurerm_resource_group.azagent1.location
   size                = "Standard_A4_v2"
-  admin_username      = "centos"
+  admin_username      = var.user
   network_interface_ids = [
     azurerm_network_interface.azagent1nic1.id,
   ]
@@ -51,15 +49,15 @@ resource "azurerm_linux_virtual_machine" "azagent1" {
   }
 
   admin_ssh_key {
-    username   = "centos"
+    username   = var.user
     public_key = file("~/fabs.pub")
   }
 
   source_image_reference {
-    publisher = "OpenLogic"
-    offer     = "CentOS"
-    sku       = "8_2"
-    version   = "latest"
+    publisher = var.ubuntu.publisher
+    offer     = var.ubuntu.offer
+    sku       = var.ubuntu.sku
+    version   = var.ubuntu.version
   }
 
   tags = {
