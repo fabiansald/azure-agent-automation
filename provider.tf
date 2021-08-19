@@ -14,7 +14,7 @@ terraform {
   }
 }
 
-resource "azurerm_resource_group" "azagent1" {
+resource "azurerm_resource_group" "azagentrg" {
   name     = var.resgroup
   location = var.milocation
 }

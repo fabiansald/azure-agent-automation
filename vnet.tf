@@ -1,9 +1,9 @@
 # VNETs
 
-resource "azurerm_virtual_network" "vnetazagent1" {
-  name                = "vnetazagent1"
-  resource_group_name = azurerm_resource_group.azagent1.name
-  location            = azurerm_resource_group.azagent1.location
+resource "azurerm_virtual_network" "vnetazagents" {
+  name                = "vnetazagents"
+  resource_group_name = azurerm_resource_group.azagentrg.name
+  location            = azurerm_resource_group.azagentrg.location
   address_space       = ["192.168.0.0/16"]
 
   tags = {
@@ -11,19 +11,19 @@ resource "azurerm_virtual_network" "vnetazagent1" {
     appid-or-sso = "fabi8483"
   }
 
-  depends_on = [azurerm_resource_group.azagent1]
+  depends_on = [azurerm_resource_group.azagentrg]
 }
 
-resource "azurerm_subnet" "azagent1sn1" {
-  name                 = "azagent1sn1"
-  resource_group_name  = azurerm_resource_group.azagent1.name
+resource "azurerm_subnet" "azagentsn" {
+  name                 = "azagentsn"
+  resource_group_name  = azurerm_resource_group.azagentrg.name
   address_prefixes     = ["192.168.77.0/25"]
-  virtual_network_name = azurerm_virtual_network.vnetazagent1.name
+  virtual_network_name = azurerm_virtual_network.vnetazagents.name
 }
 
-resource "azurerm_network_interface_security_group_association" "sgazagent1nic" {
-  network_interface_id      = azurerm_network_interface.azagent1nic1.id
-  network_security_group_id = azurerm_network_security_group.azagent1nsg1.id
+resource "azurerm_network_interface_security_group_association" "sgazagentnic" {
+  network_interface_id      = azurerm_network_interface.azagentnic.id
+  network_security_group_id = azurerm_network_security_group.azagentnsg.id
 }
 
 # NAT GATEWAY

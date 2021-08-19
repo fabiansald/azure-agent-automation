@@ -1,9 +1,9 @@
 # Landing Zone for Azure
 
-resource "azurerm_network_security_group" "azagent1nsg1" {
-  name                = "azagent1nsg1"
-  resource_group_name = azurerm_resource_group.azagent1.name
-  location            = azurerm_resource_group.azagent1.location
+resource "azurerm_network_security_group" "azagentnsg" {
+  name                = "azagentnsg"
+  resource_group_name = azurerm_resource_group.azagentrg.name
+  location            = azurerm_resource_group.azagentrg.location
 
   security_rule {
     name                       = "SSH"

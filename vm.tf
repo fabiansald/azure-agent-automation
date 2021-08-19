@@ -2,10 +2,10 @@
 
 ## Azure Agent for ADO
 
-resource "azurerm_public_ip" "azagent1pip" {
-  name                = "azagent1pip"
-  resource_group_name = azurerm_resource_group.azagent1.name
-  location            = azurerm_resource_group.azagent1.location
+resource "azurerm_public_ip" "azagentpip" {
+  name                = "${var.vmname}pip"
+  resource_group_name = azurerm_resource_group.azagentrg.name
+  location            = azurerm_resource_group.azagentrg.location
   allocation_method   = "Dynamic"
 
   tags = {
@@ -15,16 +15,16 @@ resource "azurerm_public_ip" "azagent1pip" {
   }
 }
 
-resource "azurerm_network_interface" "azagent1nic1" {
-  name                = "azagent1nic1"
-  location            = azurerm_resource_group.azagent1.location
-  resource_group_name = azurerm_resource_group.azagent1.name
+resource "azurerm_network_interface" "azagentnic" {
+  name                = "${var.vmname}nic1"
+  location            = azurerm_resource_group.azagentrg.location
+  resource_group_name = azurerm_resource_group.azagentrg.name
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.azagent1sn1.id
+    subnet_id                     = azurerm_subnet.azagentsn.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.azagent1pip.id
+    public_ip_address_id          = azurerm_public_ip.azagentpip.id
   }
   tags = {
     environment  = "Azure_Pipelines"
@@ -33,14 +33,14 @@ resource "azurerm_network_interface" "azagent1nic1" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "azagent1" {
-  name                = "azagent1"
-  resource_group_name = azurerm_resource_group.azagent1.name
-  location            = azurerm_resource_group.azagent1.location
+resource "azurerm_linux_virtual_machine" "azagentvm" {
+  name                = var.vmname
+  resource_group_name = azurerm_resource_group.azagentrg.name
+  location            = azurerm_resource_group.azagentrg.location
   size                = "Standard_A4_v2"
   admin_username      = var.user
   network_interface_ids = [
-    azurerm_network_interface.azagent1nic1.id,
+    azurerm_network_interface.azagentnic.id,
   ]
 
   os_disk {
@@ -50,7 +50,7 @@ resource "azurerm_linux_virtual_machine" "azagent1" {
 
   admin_ssh_key {
     username   = var.user
-    public_key = file("~/fabs.pub")
+    public_key = file("${var.sshkey[1]}")
   }
 
   source_image_reference {
@@ -58,6 +58,12 @@ resource "azurerm_linux_virtual_machine" "azagent1" {
     offer     = var.ubuntu.offer
     sku       = var.ubuntu.sku
     version   = var.ubuntu.version
+  }
+
+  plan {
+    name      = var.ubuntu.offer
+    publisher = var.ubuntu.publisher
+    product   = var.ubuntu.offer
   }
 
   tags = {

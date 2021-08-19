@@ -2,7 +2,7 @@
 
 variable "resgroup" {
   type    = string
-  default = "azagent1"
+  default = "azagents"
 }
 
 variable "milocation" {
@@ -10,34 +10,62 @@ variable "milocation" {
   default = "eastus2"
 }
 
+variable "vmname" {
+  type    = string
+  default = "azagentdeb1"
+}
+
 variable "user" {
-  type = string 
+  type    = string
   default = "azureps"
 }
 
+variable "sshkey" {
+  type    = list(string)
+  default = ["~/fabs", "~/fabs.pub"]
+}
+
 variable "centos" {
-  type = map(object({
-        publisher = "OpenLogic"
-        offer     = "CentOS"
-        sku       = "8_3"
-        version   = "latest"
-      }))
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "8_3"
+    version   = "latest"
   }
+}
 
 variable "debian" {
-  type = map(object({
-        publisher = "Debian"
-        offer     = "debian-10"
-        sku       = "10"
-        version   = "latest"
-      }))
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "Debian"
+    offer     = "debian-10"
+    sku       = "10"
+    version   = "latest"
   }
+}
 
 variable "ubuntu" {
-  type = map(object({
-        publisher = "cognosys"
-        offer     = "ubuntu-20-04-lts"
-        sku       = "ubuntu-20-04-lts"
-        version   = "latest"
-      }))
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "cognosys"
+    offer     = "ubuntu-20-04-lts"
+    sku       = "ubuntu-20-04-lts"
+    version   = "latest"
   }
+}

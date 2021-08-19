@@ -29,8 +29,8 @@
     url: https://gist.githubusercontent.com/fabiansald/0a266a536284a2b1e0e35af25e31fb50/raw/ff1ad7aa33a60657750c0ef4852bba76bddfc17a/azure-cli.repo
     dest: /etc/yum.repos.d/azure-cli.repo
 
-- name: Install Git Zip, Unzip, Ansible, PowerShell, Azure-CLI and Terraform
+- name: Install Git Zip, Unzip, Ansible, PowerShell, Azure-CLI, Terraform and OS Tools
   dnf:
-    name: git, ansible, terraform, powershell, azure-cli, zip, unzip
+    name: git, ansible, terraform, powershell, azure-cli, zip, unzip, tmux, vim
     state: latest
 

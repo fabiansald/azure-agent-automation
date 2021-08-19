@@ -15,16 +15,18 @@
 
 - name: Install required packages (dependencies)
   apt:
-    name: gnupg,software-properties-common,curl
+    name: gnupg,software-properties-common,curl,python3-pip,vim,tmux
     state: latest
     force_apt_get: True
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Add Terraform repository
-  shell: 
+  shell: |
     #!/bin/bash
-    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-    apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    curl -o /tmp/mkey1 -fsSL https://apt.releases.hashicorp.com/gpg  
+    apt-key add /tmp/mkey1
+    lrelease=$(lsb_release -cs)
+    apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com ${lrelease} main"
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Add MS PowerShell Repo Debian
@@ -61,7 +63,7 @@
     update_cache: yes
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Install Git Zip, Unzip, Ansible, PowerShell, Azure-CLI and Terraform
+- name: Install Git, Zip, Unzip, Ansible, PowerShell and Terraform
   apt:
     name: git, ansible, terraform, powershell, zip, unzip
     state: latest
