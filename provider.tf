@@ -27,7 +27,7 @@ resource "azurerm_resource_group" "azagentrg" {
 
 resource "azurerm_management_lock" "azagentrg-lock" {
   name       = "resource-group-level"
-  scope      = azurerm_resource_group.example.id
+  scope      = azurerm_resource_group.azagentrg.id
   lock_level = "CanNotDelete"
   notes      = "Protect this resource for RAX PS"
 }
