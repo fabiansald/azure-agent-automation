@@ -6,7 +6,7 @@
 * Customer name: RAX PS Azure Team
 * Project Name: Azure DevOps Agent creation
 * PSR:
-* Date:
+* Date: MM/DD/YYY
 
 ## Rackspace team
 
